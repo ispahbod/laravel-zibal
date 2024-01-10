@@ -1,2 +1,2 @@
-# laravel-zibal
+# zibal-laravel
 Zibal payment for Laravel Framework
