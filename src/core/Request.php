@@ -1,6 +1,6 @@
 <?php
 
-namespace Ispahbod\Zarinpal\core;
+namespace Ispahbod\Zibal\core;
 
 use GuzzleHttp\Client;
 
@@ -67,12 +67,6 @@ class Request
         $this->client = new Client();
         $this->merchantId = $merchantId;
     }
-
-    /**
-     * Enable or disable sandbox mode
-     * @param bool $sandbox Sandbox mode flag
-     * @return $this
-     */
 
     /**
      * Set the mobile number for the payment

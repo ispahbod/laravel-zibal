@@ -1,9 +1,9 @@
 <?php
 
-namespace Ispahbod\Zarinpal;
+namespace Ispahbod\Zibal;
 
-use Ispahbod\Zarinpal\core\Request;
-use Ispahbod\Zarinpal\core\Verify;
+use Ispahbod\Zibal\core\Request;
+use Ispahbod\Zibal\core\Verify;
 
 class Zibal
 {

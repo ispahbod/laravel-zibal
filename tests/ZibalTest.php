@@ -1,6 +1,6 @@
 <?php
 
-namespace Ispahbod\Zarinpal\Tests;
+namespace Ispahbod\Zibal\Tests;
 
 use PHPUnit\Framework\TestCase;
 
