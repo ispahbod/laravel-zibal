@@ -1,6 +1,6 @@
 <?php
 
-namespace Ispahbod\Zarinpal\core;
+namespace Ispahbod\Zibal\core;
 
 class Response
 {

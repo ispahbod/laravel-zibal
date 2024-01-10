@@ -3,6 +3,7 @@
 namespace Ispahbod\Zibal\core;
 
 use GuzzleHttp\Client;
+use Ispahbod\Zibal\core\Response;
 
 class Request
 {
