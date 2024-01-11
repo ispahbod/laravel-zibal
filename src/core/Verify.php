@@ -34,7 +34,7 @@ class Verify
         if (!empty($authority)) {
             $json = array_filter([
                 'merchant' => $this->merchantId,
-                'authority' => $authority,
+                'trackId' => $authority,
             ]);
             try {
                 $response = $this->client->post($url, [
