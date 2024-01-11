@@ -22,9 +22,9 @@ class Zibal
         $this->merchantId = $merchant_id;
     }
 
-    public function verify(array $array)
+    public function verify(string $authority)
     {
-        return new Verify($this->merchantId, $array);
+        return new Verify($this->merchantId, $authority);
     }
 
     public function newPaymnet()
