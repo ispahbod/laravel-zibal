@@ -31,7 +31,7 @@ class Verify
         $this->merchantId = $merchantId;
         $this->client = new Client();
         $url = "https://gateway.zibal.ir/v1/verify";
-        if (isset($data['amount']) && isset($data['authority'])) {
+        if (!empty($authority)) {
             $json = array_filter([
                 'merchant' => $this->merchantId,
                 'authority' => $authority,
