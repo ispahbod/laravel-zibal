@@ -22,12 +22,12 @@ class Zibal
         $this->merchantId = $merchant_id;
     }
 
-    public function verify(string $authority)
+    public function verify(string $authority): Verify
     {
         return new Verify($this->merchantId, $authority);
     }
 
-    public function newPaymnet()
+    public function payment(): Request
     {
         return new Request($this->merchantId);
     }
