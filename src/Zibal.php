@@ -2,6 +2,7 @@
 
 namespace Ispahbod\Zibal;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Ispahbod\Zibal\core\Request;
 use Ispahbod\Zibal\core\Verify;
 
@@ -15,13 +16,16 @@ class Zibal
 
     /**
      * Constructor for Zibal class
-     * @param string $merchantId Merchant ID for Zibal
+     * @param $merchant_id
      */
     public function __construct($merchant_id)
     {
         $this->merchantId = $merchant_id;
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function verify(string $authority): Verify
     {
         return new Verify($this->merchantId, $authority);

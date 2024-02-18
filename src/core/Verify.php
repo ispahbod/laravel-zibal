@@ -2,7 +2,9 @@
 
 namespace Ispahbod\Zibal\core;
 
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class Verify
 {
@@ -11,11 +13,6 @@ class Verify
      * @var string
      */
     protected string $merchantId;
-    /**
-     * Sandbox mode flag
-     * @var bool
-     */
-    protected bool $sandbox = false;
     protected array $response = [];
     protected Client $client;
 
@@ -24,9 +21,10 @@ class Verify
     /**
      * Constructor for Zibal class
      * @param string $merchantId Merchant ID for Zibal
-     * @param array $data Payment data including 'amount' and 'authority'
+     * @param string $authority
+     * @throws GuzzleException
      */
-    public function __construct(string $merchantId = '', string $authority)
+    public function __construct(string $merchantId, string $authority)
     {
         $this->merchantId = $merchantId;
         $this->client = new Client();
@@ -52,7 +50,7 @@ class Verify
                     $content = $body->getContents();
                     $this->response = json_decode($content, true);
                 }
-            } catch (\Exception $e) {
+            } catch (Exception) {
                 // Handle exceptions if needed
             }
         }
@@ -127,7 +125,7 @@ class Verify
      * Check if the payment is paid successfully
      * @return bool
      */
-    public function isPaid()
+    public function isPaid(): bool
     {
         if (isset($this->response['status']) && ($this->response['status'] == 1 || $this->response['status'] == 2)) {
             return true;
@@ -138,9 +136,9 @@ class Verify
 
     /**
      * Get the response code
-     * @return int|null
+     * @return string|null
      */
-    public function getCode()
+    public function getCode(): ?string
     {
         if (isset($this->response['result'])) {
             return $this->response['result'];
@@ -150,9 +148,9 @@ class Verify
 
     /**
      * Get the response data
-     * @return array
+     * @return array|null
      */
-    public function getData()
+    public function getData(): ?array
     {
         return $this->response;
     }

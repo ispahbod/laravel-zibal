@@ -3,7 +3,7 @@
 namespace Ispahbod\Zibal\core;
 
 use GuzzleHttp\Client;
-use Ispahbod\Zibal\core\Response;
+use GuzzleHttp\Exception\GuzzleException;
 
 class Request
 {
@@ -12,11 +12,6 @@ class Request
      * @var string
      */
     protected string $merchantId;
-    /**
-     * Sandbox mode flag
-     * @var bool
-     */
-    protected bool $sandbox = false;
     /**
      * Language setting
      * @var string
@@ -39,7 +34,6 @@ class Request
     protected string $descriptionValue;
     /**
      * Order ID for the payment
-     * @var int
      */
     protected string $callbackUrl;
     /**
@@ -57,7 +51,6 @@ class Request
      * @var string
      */
     protected string $mobileValue;
-    const SSL = false;
 
     /**
      * Constructor for Zibal class
@@ -71,22 +64,21 @@ class Request
 
     /**
      * Set the mobile number for the payment
-     * @param int $mobile Mobile number
+     * @param string $mobile Mobile number
      * @return $this
      */
-    public function mobile(string $mobile)
+    public function mobile(string $mobile): self
     {
         $this->mobileValue = $mobile;
         return $this;
     }
-
 
     /**
      * Set the order ID for the payment
      * @param int $id Order ID
      * @return $this
      */
-    public function order(int $id)
+    public function order(int $id): self
     {
         $this->orderId = $id;
         return $this;
@@ -97,7 +89,7 @@ class Request
      * @param string $description Payment description
      * @return $this
      */
-    public function description(string $description)
+    public function description(string $description): self
     {
         $this->descriptionValue = $description;
         return $this;
@@ -108,7 +100,7 @@ class Request
      * @param array $array Metadata array
      * @return $this
      */
-    public function metadata(array $array)
+    public function metadata(array $array): self
     {
         $this->metadata = $array;
         return $this;
@@ -119,7 +111,7 @@ class Request
      * @param string $url Callback URL
      * @return $this
      */
-    public function callback(string $url)
+    public function callback(string $url): self
     {
         $this->callbackUrl = $url;
         return $this;
@@ -130,16 +122,14 @@ class Request
      * @param mixed $amount Payment amount
      * @return $this
      */
-    public function amount($amount)
+    public function amount(int $amount): self
     {
-        $this->amountValue = (int)$amount;
+        $this->amountValue = $amount;
         return $this;
     }
 
-    public function get()
+    public function get(): Response
     {
-        $url = "https://gateway.zibal.ir/v1/request";
-        $data = [];
         $json = array_filter([
             'merchant' => $this->merchantId,
             'amount' => $this->amountValue,
@@ -149,7 +139,7 @@ class Request
             'orderId' => $this->orderId ?? null,
         ]);
         try {
-            $response = $this->client->post($url, [
+            $response = $this->client->request('POST', "https://gateway.zibal.ir/v1/request", [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'cache-control' => 'no-cache',
@@ -164,9 +154,7 @@ class Request
                 $content = $body->getContents();
                 $data = json_decode($content, true);
             }
-        } catch (\Exception $e) {
-
-        }
-        return new Response($data);
+        } catch (GuzzleException) {}
+        return new Response($data ?? []);
     }
 }

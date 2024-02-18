@@ -10,7 +10,8 @@ class Response
     {
         $this->response = $response;
     }
-    public function getPaymentUrl()
+
+    public function getPaymentUrl(): ?string
     {
         if (isset($this->response['trackId'])) {
             return "https://gateway.zibal.ir/start/" . $this->response['trackId'];
@@ -18,7 +19,7 @@ class Response
         return null;
     }
 
-    public function getAuthority()
+    public function getAuthority(): ?string
     {
         if (isset($this->response['trackId'])) {
             return $this->response['trackId'];
@@ -26,8 +27,7 @@ class Response
         return null;
     }
 
-
-    public function getData()
+    public function getData(): ?array
     {
         if (!empty($this->response)) {
             return $this->response;
@@ -51,7 +51,7 @@ class Response
         return null;
     }
 
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         if (!isset($this->response['result'])) {
             return false;
